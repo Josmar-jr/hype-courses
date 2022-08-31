@@ -3,7 +3,6 @@ import { Lesson } from "./Lesson";
 
 export function Sidebar() {
   const [{ data }] = useGetLessonsQuery();
-  console.log(data);
 
   return (
     <aside className="w-[348px] bg-neutral-900 border-l border-l-zinc-700 p-6">
