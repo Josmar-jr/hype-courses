@@ -1,8 +1,8 @@
 import Image from "next/image";
 
 import "@vime/core/themes/default.css";
+import Vimeo from '@u-wave/react-vimeo';
 
-import { DefaultUi, Player, Youtube } from "@vime/react";
 import {
   CaretRight,
   DiscordLogo,
@@ -20,7 +20,6 @@ interface VideoProps {
 
 export default function Video({ lessonData }: VideoProps) {
   const test = useRouter();
-  console.log(test);
   const lesson = lessonData?.lesson;
 
   if (!lessonData || !lesson) {
@@ -39,10 +38,15 @@ export default function Video({ lessonData }: VideoProps) {
     <div className="flex-1">
       <div className="bg-black flex justify-center">
         <div className="h-full w-full max-w-[1100px] max-h-[60vh] aspect-video">
-          <Player>
+          {/* <Player>
             <Youtube videoId={lesson.videoId} />
             <DefaultUi />
-          </Player>
+          </Player> */}
+          <Vimeo
+            video="741410126"
+            color="red"
+            className="h-full w-full flex justify-center items-center"
+          />
         </div>
       </div>
 

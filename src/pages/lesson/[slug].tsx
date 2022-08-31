@@ -10,6 +10,7 @@ import {
   useGetLessonBySlugQuery,
 } from "../../generated/graphql";
 import { client, ssrCache } from "../../lib/urql";
+import { withSSRGuest } from "../../shared/withSSRGuest";
 // import { Sidebar } from "../../components/Sidebar";
 // import {
 //   GetLessonBySlugDocument,
@@ -33,25 +34,19 @@ const Lesson: NextPage<LessonProps> = ({ slug }) => {
   });
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen w-screen">
       <Header />
-      <main className="flex flex-1">
+      {/* <main className="flex flex-1">
         <Video lessonData={data} />
 
         <Sidebar />
-      </main>
+      </main> */}
     </div>
   );
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: "blocking",
-  };
-};
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getServerSideProps = withSSRGuest(async ({ params }) => {
   client.query(GetLessonBySlugDocument, { slug: params }).toPromise;
   client.query(GetLessonsDocument).toPromise;
 
@@ -60,8 +55,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       urqlState: ssrCache.extractData(),
       slug: params?.slug,
     },
-    revalidate: 1,
-  };
-};
+  }
+});
 
 export default Lesson;
